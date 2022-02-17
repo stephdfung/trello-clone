@@ -1,10 +1,14 @@
 export const projectStatuses = [{
+  column: 1,
   status: 'To Do',
 }, {
+  column: 2,
   status: 'In Progress',
 }, {
+  column: 3,
   status: 'QA',
 }, {
+  column: 4,
   status: 'Done',
 }];
 

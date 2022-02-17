@@ -6,7 +6,7 @@ import CreateTask from './CreateTask';
 
 import '../css/board.css';
 
-export default class Column extends Component {
+class Column extends Component {
   constructor(props) {
     super(props);
 
@@ -15,23 +15,13 @@ export default class Column extends Component {
       toggleCreateTask: false,
     };
     this.toggleCreateTask = this.toggleCreateTask.bind(this)
-    this.addTask = this.addTask.bind(this)
+    this.addTodo = this.addTodo.bind(this)
   }
-  
+
   toggleCreateTask() {
     const { toggleCreateTask } = this.state;
     this.setState({
       toggleCreateTask: !toggleCreateTask,
-    })
-  }
-
-  addTask(task) {
-    const {
-      tasks
-    } = this.state;
-    this.setState({
-      tasks: [...tasks, task],
-      toggleCreateTask: false,
     })
   }
 
@@ -40,10 +30,11 @@ export default class Column extends Component {
   }
 
   onDrop(e) {
-    console.log('on drop')
-    const task = e.dataTransfer.getData('id');
-    console.log(task)
-    this.addTask(task);
+    console.log('on drop', )
+    const data = JSON.parse(e.dataTransfer.getData('id'));
+    // remove task from other column
+    // we should store the column AND task in the task
+    this.addTodo(data.task);
   }
 
   onDragStart(e, task) {
@@ -51,15 +42,21 @@ export default class Column extends Component {
     e.dataTransfer.setData('id', task);
   }
 
+  addTodo(task) {
+    this.toggleCreateTask()
+    this.props.addTodoToColumn(task)
+  }
+
   render() {
     const {
-      tasks,
       toggleCreateTask,
     } = this.state;
     const {
-      status
+      todos,
+      status,
+      column,
     } = this.props;
-    console.log('renders')
+    console.log('renders column', status)
     return (
       <div
         onDragOver={(e)=> this.onDragOver(e)}
@@ -70,15 +67,18 @@ export default class Column extends Component {
           <h3>{status}</h3>
         </div>
         <div className='column-tasks'>
-          {tasks.map((task, i) =>
+          {todos.map((task, i) =>
             <Task
+              column={column}
               task={task}
               key={i}
+              onDragStart={this.onDragStart}
             />
           )}
           {toggleCreateTask && (
             <CreateTask
-              addTask={this.addTask}
+              column={column}
+              addTodo={this.addTodo}
             />
           )}
         </div>
@@ -94,3 +94,9 @@ export default class Column extends Component {
     );
   }
 }
+
+Column.defaultProps = {
+  todos: [],
+}
+
+export default React.memo(Column);

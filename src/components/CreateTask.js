@@ -24,7 +24,8 @@ export default class CreateTask extends Component {
       task,
     } = this.state;
     const {
-      addTask
+      addTodo,
+      column,
     } = this.props;
 
     return (
@@ -39,7 +40,7 @@ export default class CreateTask extends Component {
         />
         <div
           className='create-task-button'
-          onClick={() => addTask(task)}
+          onClick={() => addTodo({ task, column })}
         >
           {addCard}
         </div>

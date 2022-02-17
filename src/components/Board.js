@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import mapValues from 'lodash/mapValues';
 import { projectStatuses } from '../globalAPI';
 
 import Column from './Column';
@@ -9,24 +10,35 @@ export default class Board extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-    };
+    this.state = {}
+
+    this.addTodoToColumn = this.addTodoToColumn.bind(this)
   }
 
-  onDrop(e) {
-    
-    const task = e.dataTransfer.getData('id');
-    this.addTask(task);
-  } 
+  addTodoToColumn(todo) {
+    const todoColumn = this.state[todo.status] || [];
+
+    this.setState({
+      [todo.status]: [...todoColumn, todo.task],
+    })
+  }
 
   render() {
     return (
       <div className='board-wrapper'>
-        {projectStatuses.map(({status}) =>
-          <Column
-            key={status}
-            status={status}
-          />)}
+        {projectStatuses.map((project) => {
+          const todos = this.state[project.status];
+          console.log(todos)
+          return (
+            <Column
+              key={project.column}
+              column={project.column}
+              status={project.status}
+              addTodoToColumn={this.addTodoToColumn}
+              todos={todos}
+            />
+          )}
+        )}
       </div>
     );
   }
