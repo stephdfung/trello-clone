@@ -30,13 +30,15 @@
 .task-wrapper  {
   display: flex;
   justify-content: space-between;
-  align-items: top;
+  gap: 0.5rem;
+  align-items: start;
   background-color: #FBFCFC;
   border-radius: 0.25rem;
   width: 100%;
   padding: 0.5rem;
   box-sizing: border-box;
   margin-bottom: 1rem;
+  white-space: normal;
 }
 
 .task-wrapper > .icon-close {

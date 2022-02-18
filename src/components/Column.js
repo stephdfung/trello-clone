@@ -32,7 +32,9 @@ class Column extends Component {
     const { column } = this.props;
     const data = JSON.parse(e.dataTransfer.getData('id'));
 
-    this.props.moveTodo(data, column)
+    if (data.column !== column) {
+      this.props.moveTodo(data, column)
+    }
   }
 
   addTodo(task) {

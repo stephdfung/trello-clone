@@ -40,8 +40,8 @@ export default class Board extends Component {
     lastCol = lastCol.filter(task => task !== todo.task);
 
     this.setState({
-      [todo.column]: [...lastCol],
       [newColumn]: [...nextCol, todo.task],
+      [todo.column]: [...lastCol],
     })
   }
 
