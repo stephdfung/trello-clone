@@ -11,7 +11,6 @@ class Column extends Component {
     super(props);
 
     this.state = {
-      tasks: [],
       toggleCreateTask: false,
     };
     this.toggleCreateTask = this.toggleCreateTask.bind(this)
@@ -30,16 +29,10 @@ class Column extends Component {
   }
 
   onDrop(e) {
-    console.log('on drop', )
+    const { column } = this.props;
     const data = JSON.parse(e.dataTransfer.getData('id'));
-    // remove task from other column
-    // we should store the column AND task in the task
-    this.addTodo(data.task);
-  }
 
-  onDragStart(e, task) {
-    console.log("dragStart", task);
-    e.dataTransfer.setData('id', task);
+    this.props.moveTodo(data, column)
   }
 
   addTodo(task) {
@@ -48,15 +41,14 @@ class Column extends Component {
   }
 
   render() {
-    const {
-      toggleCreateTask,
-    } = this.state;
+    const { toggleCreateTask } = this.state;
     const {
       todos,
       status,
       column,
+      deleteTodoFromColumn,
     } = this.props;
-    console.log('renders column', status)
+
     return (
       <div
         onDragOver={(e)=> this.onDragOver(e)}
@@ -72,13 +64,14 @@ class Column extends Component {
               column={column}
               task={task}
               key={i}
-              onDragStart={this.onDragStart}
+              deleteTodoFromColumn={deleteTodoFromColumn}
             />
           )}
           {toggleCreateTask && (
             <CreateTask
               column={column}
               addTodo={this.addTodo}
+              toggleCreateTask={this.toggleCreateTask}
             />
           )}
         </div>
@@ -87,7 +80,7 @@ class Column extends Component {
             className='new-task-button'
             onClick={this.toggleCreateTask}
           >
-            <i className='icon-plus'/><span>{openCreateTask}</span>
+            <span className='icon-plus'>&#43;</span><span>{openCreateTask}</span>
           </div>
         </div>
       </div>

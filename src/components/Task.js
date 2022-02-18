@@ -3,7 +3,6 @@ import React, { Component } from 'react';
 export default class Task extends Component {
 
   onDragStart(e, task) {
-    console.log("dragStart", task);
     const { column } = this.props;
     const data = {
       column,
@@ -16,6 +15,8 @@ export default class Task extends Component {
   render() {
     const {
       task,
+      column,
+      deleteTodoFromColumn
     } = this.props;
 
     return (
@@ -24,7 +25,8 @@ export default class Task extends Component {
         onDragStart={(e) => this.onDragStart(e, task)}
         className='task-wrapper'
       >
-        {task}
+        <span>{task}</span>
+        <span className='icon-close' onClick={() => deleteTodoFromColumn(task, column)}>&#215;</span>
       </div>
     );
   }

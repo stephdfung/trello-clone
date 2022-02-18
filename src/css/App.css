@@ -1,0 +1,14 @@
+h1, h2, h3, h4 {
+  margin: 0;
+}
+
+textarea {
+  font-family: unset;
+  border: unset;
+  resize: vertical;
+  font-size: unset;
+}
+
+textarea:focus {
+  outline: none;
+}

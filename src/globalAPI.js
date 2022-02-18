@@ -19,3 +19,5 @@ export const addCard = 'Add card';
 export const openCreateTask = 'Add another card';
 
 export const validations = "isNotBlankString";
+
+export const oops = "Oops, enter a title";

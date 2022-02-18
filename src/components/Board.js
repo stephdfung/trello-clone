@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import mapValues from 'lodash/mapValues';
 import { projectStatuses } from '../globalAPI';
 
 import Column from './Column';
@@ -12,14 +11,37 @@ export default class Board extends Component {
 
     this.state = {}
 
-    this.addTodoToColumn = this.addTodoToColumn.bind(this)
+    this.addTodoToColumn = this.addTodoToColumn.bind(this);
+    this.moveTodo = this.moveTodo.bind(this);
+    this.deleteTodoFromColumn = this.deleteTodoFromColumn.bind(this)
   }
 
   addTodoToColumn(todo) {
-    const todoColumn = this.state[todo.status] || [];
+    const todoColumn = this.state[todo.column] || [];
 
     this.setState({
-      [todo.status]: [...todoColumn, todo.task],
+      [todo.column]: [...todoColumn, todo.task],
+    })
+  }
+
+  deleteTodoFromColumn(todo, column) {
+    let col = this.state[column];    
+    col = col.filter(task => task !== todo);
+
+    this.setState({
+      [column]: [...col],
+    })
+  }
+
+  moveTodo(todo, newColumn) {
+    let lastCol = this.state[todo.column];
+    const nextCol = this.state[newColumn] || [];
+    
+    lastCol = lastCol.filter(task => task !== todo.task);
+
+    this.setState({
+      [todo.column]: [...lastCol],
+      [newColumn]: [...nextCol, todo.task],
     })
   }
 
@@ -27,14 +49,16 @@ export default class Board extends Component {
     return (
       <div className='board-wrapper'>
         {projectStatuses.map((project) => {
-          const todos = this.state[project.status];
-          console.log(todos)
+          const todos = this.state[project.column];
+
           return (
             <Column
               key={project.column}
               column={project.column}
               status={project.status}
               addTodoToColumn={this.addTodoToColumn}
+              deleteTodoFromColumn={this.deleteTodoFromColumn}
+              moveTodo={this.moveTodo}
               todos={todos}
             />
           )}

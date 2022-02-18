@@ -1,3 +1,108 @@
-.icon-plus {
-  background-image: url('../icons/iconmonstr-plus-thin.svg');
+.board-wrapper {
+  display: flex;
+  gap: 0.5rem;
+  background-color: #00C2E0;
+  padding: 0.5rem;
+
+  scroll-snap-type: x mandatory;
+  bottom: 0;
+  left: 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  position: absolute;
+  right: 0;
+  top: 0;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.column {
+  display: grid;
+  grid-template-rows: 2rem auto 2rem;
+  min-width: 320px;
+  grid-gap: 1rem;
+  flex-grow: 1;
+  background-color: #EBECF4;
+  border-radius: 0.25rem;
+  padding: 1rem;
+}
+
+.task-wrapper  {
+  display: flex;
+  justify-content: space-between;
+  align-items: top;
+  background-color: #FBFCFC;
+  border-radius: 0.25rem;
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+}
+
+.task-wrapper > .icon-close {
+  font-size: unset;
+  margin-bottom: unset;
+  font-weight: unset;
+}
+
+.create-task-wrapper {
+  display: grid;
+  grid-gap: 1rem;
+}
+
+.create-task-input {
+  background-color: #FBFCFC;
+  border-radius: 0.25rem;
+  width: 100%;
+  padding: 0.5rem;
+  box-sizing: border-box;
+  height: 2.25rem;
+  min-height: 2.25rem;
+  max-height: 10rem;
+  padding: 0.5rem;
+}
+
+.create-task-input__invalid {
+  border: 1px solid red;
+}
+
+.create-task-actions {
+  display: flex;
+  gap: .5rem;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.create-task-button {
+  cursor: pointer;
+  background-color: green;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  color: #fff;
+  font-weight: 600;
+}
+
+.create-task-invalid {
+  color: red;
+  margin: auto 0;
+}
+
+.column-footer{
+  color: #7B7D7D;
+  font-weight: 600;
+}
+
+.new-task-button {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  cursor: pointer;
+}
+
+.icon-plus, .icon-close {
+  cursor: pointer;
+  color: #7B7D7D;
+  font-weight: 600;
+  font-size: 1.75rem;
+  margin-bottom: 0.25rem;
 }
